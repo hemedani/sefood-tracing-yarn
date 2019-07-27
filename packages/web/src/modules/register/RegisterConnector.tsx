@@ -1,3 +1,5 @@
 import React from "react";
+import { RegisterView } from "./RegisterView";
+import "./register.css";
 
-export const RegisterConnector = () => <div>Hello</div>;
+export const RegisterConnector = () => <RegisterView />;
