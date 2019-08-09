@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm";
-import { ObjectType, Field, ID, Root, registerEnumType } from "type-graphql";
+import { ObjectType, Field, ID, registerEnumType, Root } from "type-graphql";
 import { Store } from "./Store";
 
 enum UserRole {
@@ -24,30 +24,35 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column("varchar", { nullable: true })
   firstName: string;
 
-  @Field()
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column("varchar", { nullable: true })
   lastName: string;
 
-  @Field()
-  name(@Root() parent: User): string {
-    return `${parent.firstName} ${parent.lastName}`;
+  @Field(() => String, { nullable: true })
+  name(@Root() parent: User): string | null {
+    return parent.firstName && parent.lastName
+      ? `${parent.firstName} ${parent.lastName}`
+      : parent.firstName
+      ? parent.firstName
+      : parent.lastName
+      ? parent.lastName
+      : null;
   }
 
   @Field()
-  @Column("text", { unique: true })
-  email: string;
-
-  @Field()
-  @Column("int", { unique: true })
+  @Column("bigint", { unique: true })
   phone: number;
 
-  @Field()
-  @Column()
+  @Column("integer", { default: 0 })
   authCode: number;
+
+  @Field(() => [String])
+  @Column("simple-array")
+  devices: string[];
 
   @Field()
   @Column("bool", { default: false })
@@ -63,9 +68,6 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Store, store => store.owner)
   @JoinColumn()
-  @Field(() => Store)
+  @Field(() => Store, { nullable: true })
   ownStore: Store;
-
-  @Column()
-  password: string;
 }

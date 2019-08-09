@@ -147,3 +147,7 @@ template {
 [hidden] {
   display: none;
 }
+.register {
+  padding: 20rem;
+  display: flex;
+}

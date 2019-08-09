@@ -6,6 +6,9 @@ packages/*/node_modules
 /.pnp
 .pnp.js
 
+# css
+packages/**/*.css
+
 # testing
 /coverage
 

@@ -17,8 +17,8 @@
     "typescript": "3.5.3"
   },
   "scripts": {
-    "build-css": "stylus src/**/*.styl",
-    "watch-css": "npm run build-css && stylus -w ./src/*/*/*.styl",
+    "build-css": "stylus ./src/styles/index.styl",
+    "watch-css": "yarn build-css && stylus -w ./src/styles/index.styl",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
